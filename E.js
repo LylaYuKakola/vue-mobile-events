@@ -39,6 +39,7 @@
  *
  */
 
+import Vue from 'vue';
 
 /**
  * vue上点击事件处理类
@@ -95,6 +96,11 @@ class VueTouch {
   start(e) {
     
     let g = this;
+  
+    // 初始化点击状态
+    g.moved = false;
+    g.leaved = false;
+    g.longTouched = false;
     
     g.firstTouchPosition = g.getMultiCenter(e.changedTouches);
     g.firstTouchTime = e.timeStamp;
@@ -128,7 +134,7 @@ class VueTouch {
         g.touchType === "swipeup" && g.callBack(e, g.binding.value);
       if (_angle <= 20 && _angle >= -20)
         g.touchType === "swipeleft" && g.callBack(e, g.binding.value);
-      if ((_angle <= -160 && _angle > -180) || (_angle >= 160 && _angle <= 180))
+      if ((_angle <= -160 && _angle >-180) || (_angle >= 160 && _angle <= 180))
         g.touchType === "swiperight" && g.callBack(e, g.binding.value);
     } else {
       if (!g.longTouched && !g.moved) {
@@ -174,43 +180,45 @@ class VueTouch {
   }
 }
 
-export const buildEvents = (Vue) => {
-  Vue.directive("tap", {
-    bind: function (el, binding) {
-      new VueTouch(el, binding, "tap");
-    }
-  });
-  Vue.directive("swipe", {
-    bind: function (el, binding) {
-      new VueTouch(el, binding, "swipe");
-    }
-  });
-  Vue.directive("swipeleft", {
-    bind: function (el, binding) {
-      new VueTouch(el, binding, "swipeleft");
-    }
-  });
-  Vue.directive("swiperight", {
-    bind: function (el, binding) {
-      new VueTouch(el, binding, "swiperight");
-    }
-  });
-  Vue.directive("swipedown", {
-    bind: function (el, binding) {
-      new VueTouch(el, binding, "swipedown");
-    }
-  });
-  Vue.directive("swipeup", {
-    bind: function (el, binding) {
-      new VueTouch(el, binding, "swipeup");
-    }
-  });
-  Vue.directive("longtap", {
-    bind: function (el, binding) {
-      new VueTouch(el, binding, "longtap");
-    }
-  });
-};
+
+Vue.directive("tap", {
+  bind: function (el, binding) {
+    new VueTouch(el, binding, "tap");
+  }
+});
+Vue.directive("swipe", {
+  bind: function (el, binding) {
+    new VueTouch(el, binding, "swipe");
+  }
+});
+Vue.directive("swipeleft", {
+  bind: function (el, binding) {
+    new VueTouch(el, binding, "swipeleft");
+  }
+});
+Vue.directive("swiperight", {
+  bind: function (el, binding) {
+    new VueTouch(el, binding, "swiperight");
+  }
+});
+Vue.directive("swipedown", {
+  bind: function (el, binding) {
+    new VueTouch(el, binding, "swipedown");
+  }
+});
+Vue.directive("swipeup", {
+  bind: function (el, binding) {
+    new VueTouch(el, binding, "swipeup");
+  }
+});
+Vue.directive("longtap", {
+  bind: function (el, binding) {
+    new VueTouch(el, binding, "longtap");
+  }
+});
+
+
+
 
 
 
